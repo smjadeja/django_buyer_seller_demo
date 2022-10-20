@@ -31,7 +31,14 @@ home
                                     {% endif %}
                                 </div>
                                 <div>
-                                    <span>Your Balance : <span class="text-success">{{user.balance}}</span></span>
+                                     <span>Your Balance :
+                                        {% if user.balance > 0%}
+                                        <span class="text-success">{{user.balance}}</span>
+                                        {% else %}
+                                        <span class="text-danger">{{user.balance}}</span>
+                                        {% endif %}
+
+                                    </span>
                                     <a href="/" class="btn btn-sm btn-primary m-3">Back to home</a>
                                     <a href="/logout" class="btn btn-sm btn-warning m-3">Logout</a>
                                 </div>
