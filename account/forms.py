@@ -107,7 +107,7 @@ class ProductForm(forms.ModelForm):
     
         prod_sell_price = forms.IntegerField(max_value=1000,min_value=1)
         prod_cost_price = forms.IntegerField(max_value=1000,min_value=1)
-        stock_unit = forms.IntegerField(max_value=10,min_value=1)
+        # stock_unit = forms.IntegerField(max_value=10,min_value=1)
 
         error_messages = {
             'product_name': {'required': _('Please enter product name'),},
