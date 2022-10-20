@@ -41,8 +41,12 @@ orders
                         <th scope="col">#</th>
                         <th scope="col">Order Date</th>
                         <th scope="col">Total Unit</th>
+                        {% if user.user_role_id == 2%}
                         <th scope="col">Purchased By</th>
-                        <th scope="col">Purchased From</th>             
+                        {% endif %}
+                          {% if user.user_role_id == 1%}
+                        <th scope="col">Purchased From</th>   
+                        {% endif %}          
                         <th scope="col">Product ID</th>             
                     </tr>
                 </thead>
@@ -52,8 +56,12 @@ orders
                         <td>{{order.id}}</td>
                         <td>{{order.purchase_date}}</td>
                         <td>{{order.total_unit}}</td>
+                        {% if user.user_role_id == 2%}
                         <td>{{order.purchased_by_user.name.capitalize}}</td>
+                        {% endif %}
+                         {% if user.user_role_id == 1%}
                         <td>{{order.purchased_from_user.name.capitalize}}</td>
+                        {% endif %}
                         <td>{{order.product_id_id}}</td>
                     </tr>
                     {% endfor %}

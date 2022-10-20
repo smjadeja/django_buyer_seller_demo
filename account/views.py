@@ -131,6 +131,7 @@ def update_product(request, id):
 def delprod(request, id):
     if 'email' in request.session:
         user = MyUser.objects.get(email=request.session.get('email'))
+        print(id, 'product id')
         if id is not None:
             try:                
                 prod = Product.objects.get(id=id, created_by_user=user)
