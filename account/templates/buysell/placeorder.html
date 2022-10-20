@@ -1,0 +1,94 @@
+{% extends "buysell/common.html" %}
+
+{% block title %}success {% endblock %}
+
+{% block body %}
+
+
+<style>
+    input {
+        /* margin-bottom: 10px; */
+        width: 100%;
+    }
+
+    .content {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    li {
+        color: #dc3545;
+    }
+</style>
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                        <div class="d-flex justify-content-between">
+                        <div>
+                            Hi, {{user.name.capitalize}}!
+                            <br>
+                            <p class="text-secondary"> You have logged in as a {{user.user_role}}.                                                          </p>
+                        </div>
+                        <div>
+                            <a href="/" class="btn btn-sm btn-primary m-3">Back to home</a>
+                            <a href="/logout" class="btn btn-sm btn-warning m-3" >Logout</a>
+                        </div>
+                        
+                        </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="content">
+  <div class="container" style="max-width: 1920px ;">
+    <div class="row">
+      <div class="col-sm" style="max-width: 100%">
+        <table class="table justify-content-center shadow">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Your Order</th>
+              {% if messages %}
+              {% for msg in messages %}
+              <div class="alert alert-danger">
+                <strong>Error !</strong> {{msg}}
+              </div>
+              {% endfor %}
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p> <strong>Product Name : </strong> {{product.product_name.capitalize }}</p>
+                <p> <strong>Product Price : </strong> {{product.prod_sell_price }} </p>
+                <p> <strong>Product Description : </strong>{{product.product_desc.capitalize }}</p>
+                <p> <strong>Order Qty:</strong> {{quantity}}</p>
+                <p> <strong>Seller:</strong> {{product.created_by_user.name.capitalize }} </p>
+                <img src="/media/{{product.product_img }}" alt="" class="w-50"><br><br>
+                <p> <strong>Order Total: </strong> {{order_total}}</p>
+                <div class="alert alert-success" role="alert">
+                <p><strong>Success !</strong> <span>Order Placed Successfully.</span></p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

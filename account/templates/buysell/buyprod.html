@@ -1,0 +1,104 @@
+{% extends 'buysell/common.html' %}
+
+
+
+{% block title %} Place order{% endblock %}
+
+{% block body %}
+
+
+<style>
+    input {
+        /* margin-bottom: 10px; */
+        width: 100%;
+    }
+
+    .content {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    li {
+        color: #dc3545;
+    }
+</style>
+
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    Hi, {{user.name.capitalize}}!
+                                    <br>
+                                    <p class="text-secondary"> You have logged in as a {{user.user_role}}. </p>
+                                </div>
+                                <div>
+                                    <span>Your Balance :  <span class="text-success">{{user.balance}}</span></span>
+                                    <a href="/productview" class="btn btn-sm btn-primary m-3">Back to home</a>
+                                    <a href="/logout" class="btn btn-sm btn-warning m-3">Logout</a>
+                                </div>
+
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container" style="max-width: 1920px ;">
+        <div class="row">
+            <div class="col-sm" style="max-width: 100%">
+                <table class="table justify-content-center shadow">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Place Order</th>
+                            {% if messages %}
+                            {% for msg in messages %}
+                            <div class="alert alert-danger">
+                                <strong>Error !</strong> {{msg}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="container">                               
+                                    <p> <strong>Product Name : </strong> {{product.product_name.capitalize }}</p>
+                                    <p> <strong>Product Price : </strong> {{product.prod_sell_price }} </p>
+                                    <p> <strong>Product Description : </strong>{{product.product_desc.capitalize }}</p>
+                                    
+                                    <p> <strong>Seller:</strong> {{product.created_by_user.name.capitalize }} </p>
+                                    <img src="/media/{{product.product_img }}" alt="" class="w-50"><br><br>
+                                    <p> <strong>Order Total: </strong> {{total_price}}</p>  
+                                    
+                                    <form action="/placeorder/{{product.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <strong>Order Unit : </strong> <input type="number" name="quantity" value="{{quantity}}" readonly class="w-25">
+                                        <br>
+                                        <br>
+                                        <input type="submit" value="Place order" class="btn btn-sm btn-success form-control-sm w-25">
+                                        <br>
+                                    </form>    
+                                                                
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

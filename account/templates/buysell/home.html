@@ -1,0 +1,96 @@
+{% extends 'buysell/common.html' %}
+{% block title %}
+home
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    Hi, {{user.name.capitalize}}!
+                                    <br>
+                                    <p class="text-secondary"> You have logged in as a {{user.user_role}}.
+                                </div>
+                                <div>
+                                    {% if messages %}
+                                    {% for msg in messages %}
+
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>Success!</strong> {{msg}}
+                                    </div>                                    
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <span>Your Balance : <span class="text-success">{{user.balance}}</span></span>
+                                    <a href="/" class="btn btn-sm btn-primary m-3">Back to home</a>
+                                    <a href="/logout" class="btn btn-sm btn-warning m-3">Logout</a>
+                                </div>
+
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="content">
+    <div class="container" style="max-width: 1920px ;">
+        <div class="row">
+            <div class="col-sm p-0" style="max-width: 100%">
+                <table class="table justify-content-center">
+                    <tbody>
+                        <tr>
+                            <td class="border-0">
+                                <div class="row d-flex justify-content-around">
+                                    <div class="shadow p-5 mb-5 bg-white rounded"><a href="/productview"
+                                            style="text-decoration:none ;">View
+                                            Products</a> <br> <br>
+                                        <img src="/media/icon/box.png" alt="" height="100">
+                                    </div>
+                                    {% if user.user_role_id == 2%}
+                                    <div class="shadow p-5 mb-5 bg-white rounded"> <a href="/orders"
+                                            style="text-decoration:none ;">Sell
+                                            History</a> <br> <br>
+                                        <img src="/media/icon/order.png" alt="" height="100">
+                                    </div>
+                                    {% else %}
+                                    <div class="shadow p-5 mb-5 bg-white rounded"> <a href="/orders"
+                                            style="text-decoration:none ;">Your
+                                            Order History</a> <br> <br>
+                                        <img src="/media/icon/order.png" alt="" height="100">
+                                    </div>
+                                    {% endif %}
+                                    <div class="shadow p-5 mb-5 bg-white rounded"> <a href="/updateprofile"
+                                            style="text-decoration:none ;">Update
+                                            Profile</a> <br> <br>
+                                        <img src="/media/icon/man.png" alt="" height="100">
+                                    </div>
+                                    <div class="shadow p-5 mb-5 bg-white rounded"> <a href="/changepass"
+                                            style="text-decoration:none ;">Change
+                                            Password</a> <br> <br> <img src="/media/icon/password.png" alt=""
+                                            height="100"></div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'buysell/common.html' %}
+{% block title %}
+orders
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                        <div class="d-flex justify-content-between">
+                        <div>
+                            Hi, {{user.name.capitalize}}!
+                            <br>
+                            <p class="text-secondary"> You have logged in as a {{user.user_role}}.                                                          </p>
+                        </div>
+                        <div>
+                            <a href="/" class="btn btn-sm btn-primary m-3">Back to home</a>
+                            <a href="/logout" class="btn btn-sm btn-warning m-3" >Logout</a>
+                        </div>
+                        
+                        </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container m-2" style="max-width: 1920px ;">
+    <div class="row">
+          <div class="col-sm w-75">
+            <table class="table shadow">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Total Unit</th>
+                        <th scope="col">Purchased By</th>
+                        <th scope="col">Purchased From</th>             
+                        <th scope="col">Product ID</th>             
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{order.id}}</td>
+                        <td>{{order.purchase_date}}</td>
+                        <td>{{order.total_unit}}</td>
+                        <td>{{order.purchased_by_user.name.capitalize}}</td>
+                        <td>{{order.purchased_from_user.name.capitalize}}</td>
+                        <td>{{order.product_id_id}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'buysell/common.html' %}
+
+{% block title %} login{% endblock %}
+
+{% block body %}
+
+
+<style>
+    input {
+        /* margin-bottom: 10px; */
+        width: 100%;
+    }
+
+    .content {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    li {
+        color: #dc3545;
+    }
+</style>
+
+
+<div class="content">
+    <div class="container pt-5" style="max-width: 1920px ;">
+        <div class="row">
+            <div class="col-sm" style="max-width: 100%">
+                <table class="table justify-content-center shadow">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Login</th>
+                            {% if messages %}
+                            {% for msg in messages %}
+                            <div class="alert alert-danger">
+                                <strong>Error !</strong> {{msg}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form action="" method="POST" novalidate enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{form.as_p}}
+                                    <input type="submit" class="btn btn-sm btn-success w-25" value="Login">
+                                </form>
+                                <br>
+                                <div style="text-align: center;">
+                                    Don't  Have an account ? <a href="/signup">Signup</a>
+
+                                </div>                             
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

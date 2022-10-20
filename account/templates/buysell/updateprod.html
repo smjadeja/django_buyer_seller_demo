@@ -1,0 +1,99 @@
+{% extends 'buysell/common.html' %}
+
+{% block title %}
+update prod
+{% endblock %}
+
+{% block body %}
+
+
+<style>
+    input {
+        /* margin-bottom: 10px; */
+        width: 200px;
+        width: 100%;
+    }
+
+    .content {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    li {
+        color: #dc3545 !important;
+    }
+</style>
+
+
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    Hi, {{user.name.capitalize}}!
+                                    <br>
+                                    <p class="text-secondary"> You have logged in as a {{user.user_role}}. </p>
+                                </div>
+                                <div>
+                                    <a href="/productview" class="btn btn-sm btn-primary m-3">Back</a>
+                                    <a href="/logout" class="btn btn-sm btn-warning m-3">Logout</a>
+                                </div>
+
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container" style="max-width: 1920px ;">
+        <div class="row">
+            <div class="col-sm" style="max-width: 100%">
+                <table class="table justify-content-center shadow-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Edit Product</th>
+
+
+                            {% if messages %}
+                            {% for msg in messages %}
+
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Error!</strong> {{msg}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form action="" method="POST" novalidate enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                      {% csrf_token %}
+                                    {{form.as_p}}                                       
+                                    <input type="submit" class="btn btn-sm btn-success w-25" value="Update">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

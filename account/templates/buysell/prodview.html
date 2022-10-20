@@ -1,0 +1,216 @@
+{% extends 'buysell/common.html' %}
+
+{% block title %} Product View{% endblock %}
+
+{% block body %}
+
+<style>
+    input {
+        /* margin-bottom: 10px; */
+        width: 200px;
+        /* width: 100%; */
+        margin-bottom: 2px;
+    }
+
+    .content {
+        max-width: 275px;
+    }
+
+    li {
+        color: #dc3545 !important;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: auto;
+        grid-gap: 1rem;
+    }
+
+    .card {
+        border: 2px solid #e7e7e7;
+        border-radius: 4px;
+        padding: .5rem;
+    }
+</style>
+
+
+<div class="container" style="max-width: 1920px ;">
+    <div class="row">
+        <div class="col-sm p-0" style="max-width: 100%">
+            <table class="table justify-content-center shadow-sm">
+                <thead class="thead-white">
+                    <tr>
+                        <th scope="col">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    Hi, {{user.name.capitalize}}!
+                                    <br>
+                                    <p class="text-secondary"> You have logged in as a {{user.user_role}}. </p>
+                                </div>
+                                <div>
+                                    <span>Your Balance :
+                                        {% if user.balance > 0%}
+                                        <span class="text-success">{{user.balance}}</span>
+                                        {% else %}
+                                        <span class="text-danger">{{user.balance}}</span>
+                                        {% endif %}
+
+                                    </span>
+                                    <a href="/" class="btn btn-sm btn-primary m-3">Back to home</a>
+                                    <a href="/logout" class="btn btn-sm btn-warning m-3">Logout</a>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container pt-1" style="max-width: 1920px ;">
+    <div class="row">
+        {%if user.user_role_id == 2 %}
+        <div class="col-sm w-25" style="max-width:20% ;">
+            <table class="table justify-content-center shadow">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Add New Product</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form action="" method="POST" novalidate enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                <input type="submit" class="btn btn-sm btn-success" value="Add Product">
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {%if user.user_role_id == 2 %}
+        <div class="col-sm w-75" style="max-width:80% ;">
+            {% else %}
+            <div class="col-sm w-75" style="max-width:100% ;">
+                {% endif %}
+
+                {% if messages %}
+                {% for msg in messages %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> {{msg}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <table class="table shadow">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            {%if user.user_role_id == 1%}
+                            <th>Seller</th>
+                            {% endif %}
+                            <th scope="col">Cost Price</th>
+                            <th scope="col">Stock Unit</th>
+                            {%if user.user_role_id == 1 %}
+                            <th scope="col">Buy</th>
+                            {% endif %}
+                            {%if user.user_role_id == 2 %}
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                            {% endif %}
+                            {# <th scope="col">Created Date</th> #}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prod in products %}
+                        <tr>
+                            <td>{{prod.id}}</td>
+                            <td>{{prod.product_name.capitalize}}</td>
+                            <td>{{prod.product_desc.capitalize|slice:":10"}}...</td>
+                            <td> <img src="/media/{{prod.product_img}}" alt="" width="100" height="100"> </td>
+                            <td>{{prod.prod_sell_price}}</td>
+                            {%if user.user_role_id == 1 %}
+                            <td>
+                                {{prod.created_by_user}}
+                            </td>
+                            {% endif %}
+                            <td>{{prod.prod_cost_price}}</td>
+                            {% if prod.stock_unit > 0 %}
+                            <td>{{prod.stock_unit}}</td>
+                            {% else %}
+                            <td class="text-danger">Out of stock !</td>
+                            {% endif %}
+
+                            {%if user.user_role_id == 1 and prod.stock_unit > 0 %}
+                            <td>
+                                <form action="/buyproduct/{{prod.id}}" method="POST" class="form-group" novalidate>
+                                    {% csrf_token %}
+                                    <input type="number" class="form-control form-control-sm w-50" name="quantity"
+                                        value="1" min="1" max="{{prod.stock_unit}}">
+                                    <br>
+                                    <input type="submit" value="Buy" class="btn btn-sm btn-info w-50">
+                                </form>
+                            </td>
+                            {% elif user.user_role_id == 1 and prod.stock_unit <= 0 %} <td> <button
+                                    class="btn btn-sm btn-secondary">Buy</button> </td>
+                                {% endif %}
+                                {%if user.user_role_id == 2 %}
+                                <td><a href="/editproduct/{{prod.id}}" class="btn btn-sm btn-success">Edit</a></td>
+                                <td>                                    
+                                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                    Delete
+                                </button>
+                                    
+                                </td>                                                    
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want delete the product ?
+                                                Once it done it can't be undone..
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-dismiss="modal">Cancel</button>                                                
+                                                <a href="/delete/{{prod.id}}" class="btn btn-sm btn-danger"> Confirm Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+    {% endblock %}
