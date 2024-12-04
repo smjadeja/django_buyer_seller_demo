@@ -10,7 +10,7 @@ class CustomMinvalue(MinValueValidator):
 
 class User_Role(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
-    role_name = models.CharField(max_length=20)
+    role_name = models.CharField(max_length=20)       
     role_desc = models.CharField(max_length=20)
 
     def __str__(self):
@@ -22,7 +22,7 @@ class MyUser(models.Model):
     dob = models.DateField(verbose_name='Date of birth', null=True)
     email = models.EmailField(unique=True)
     mobile = models.IntegerField()
-    balance = models.FloatField(validators=[CustomMinvalue(0)])
+    balance = models.FloatField(validators=[CustomMinvalue(0), MaxValueValidator(100000)])
     password = models.CharField(max_length=10)
     address = models.TextField(max_length=100)
     user_role = models.ForeignKey(User_Role, on_delete=models.DO_NOTHING)
@@ -35,8 +35,8 @@ class Product(models.Model):
     product_name = models.CharField(max_length=20)
     product_desc = models.CharField(max_length=100)
     product_img = models.ImageField(upload_to='images/')
-    prod_sell_price = models.IntegerField(validators=[MinValueValidator(1)])
-    prod_cost_price = models.IntegerField(validators=[MinValueValidator(1)])
+    prod_sell_price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100000)])
+    prod_cost_price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100000)])
     stock_unit = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     created_by_user = models.ForeignKey(MyUser, null=True, on_delete=models.SET_NULL)
     created_date = models.DateField(auto_now_add=True)
